@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -28,9 +29,12 @@ public class AppUser {
     @Setter
     private LocalDate regDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     private Details userDetails;
+
+    @OneToMany(mappedBy = "borrower")
+    Set<BookLoan> bookLoans;
 
     public AppUser(String username, String password, LocalDate reDate, Details userDetails) {
         this.username = username;

@@ -2,12 +2,15 @@ package se.mattiashellman.lexicon.jpalibraryapp.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
 @Getter
 @Entity
+@NoArgsConstructor
+
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +30,21 @@ public class Author {
     @ManyToMany
     Set<Book> writtenBooks;
 
+    public Author(String firstName, String lastName, Set<Book> writtenBooks) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.writtenBooks = writtenBooks;
+    }
 
+    public void addBook(Book book) {
+        writtenBooks.add(book);
+        book.getAuthors().add(this);
+
+    }
+
+    public void removeBook(Book book) {
+        if (writtenBooks.remove(book)) {
+            book.getAuthors().remove(this);
+        }
+    }
 }
