@@ -43,15 +43,21 @@ public class AppUser {
         this.userDetails = userDetails;
     }
 
-    public void addBookLoan(BookLoan bookLoan) {
-        if (bookLoans.add(bookLoan)) {
+    public boolean addBookLoan(BookLoan bookLoan) {
+        if (bookLoan.getBook().isAvailable() && bookLoans.add(bookLoan)) {
             bookLoan.setBorrower(this);
+            bookLoan.getBook().setAvailable(false);
+            return true;
         }
+        return false;
     }
 
-    public void removeBookLoan(BookLoan bookLoan) {
+    public boolean removeBookLoan(BookLoan bookLoan) {
         if (bookLoans.remove(bookLoan)) {
             bookLoan.setBorrower(null);
+            bookLoan.getBook().setAvailable(true);
+            return true;
         }
+        return false;
     }
 }

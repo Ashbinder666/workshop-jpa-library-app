@@ -1,5 +1,6 @@
 package se.mattiashellman.lexicon.jpalibraryapp;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class AppCommandLineRunner implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args){
         // AppUserRepository
         Details details = detailsRepository.save(new Details("email@email.com", "name", LocalDate.of(1982, 12, 2)));

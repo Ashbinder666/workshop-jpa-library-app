@@ -51,4 +51,7 @@ public class Book {
         }
     }
 
+    @Setter
+    private boolean available = true;
+
 }
